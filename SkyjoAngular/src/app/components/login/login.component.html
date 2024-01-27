@@ -4,7 +4,7 @@
       <div class="card shadow p-3 mb-5 bg-body-tertiary rounded-4">
         <div class="card-body">
           <h3 class="text-center mb-4">Skyjo</h3>
-          <form (ngSubmit)="check()" #form="ngForm">
+          <form [formGroup]="form">
             <div class="mb-3">
               <label for="user" class="form-label">User</label>
               <input
@@ -12,19 +12,38 @@
                 class="form-control rounded-pill mb-3"
                 id="user"
                 name="user"
+                formControlName="login"
                 placeholder="Username"
+                required
               />
+              <div
+                *ngIf="form.get('login')?.dirty && form.get('login')?.invalid"
+              >
+                <span *ngIf="form.get('login')?.hasError('required')"
+                  >*obligatoire</span
+                >
+              </div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 password-input-wrapper">
               <label for="password" class="form-label">Password</label>
               <input
-                type="password"
+                type="{{ showPassword ? 'text' : 'password' }}"
                 class="form-control rounded-pill mb-3"
                 id="password"
+                formControlName="password"
                 name="password"
-                placeholder="Password"
+                placeholder="Enter your Password"
               />
+              <span
+                class="bi"
+                [ngClass]="{
+                  'bi-eye': !showPassword,
+                  'bi-eye-slash': showPassword
+                }"
+                (click)="togglePasswordVisibility()"
+              ></span>
             </div>
+
             <div class="mb-3">
               <a routerLink="/forgot-password">Forgot password?</a>
             </div>
@@ -36,6 +55,7 @@
                   background: linear-gradient(to right, #007bff, #00ffb0);
                   color: white;
                 "
+                [disabled]="form.invalid"
                 routerLink="/home"
               >
                 Login

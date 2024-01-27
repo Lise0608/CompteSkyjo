@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthentificationService } from 'src/app/services/authentification.service';
 
@@ -11,11 +12,25 @@ export class LoginComponent {
   login: string = '';
   password = '';
   erreur = false;
+  form: FormGroup;
+  showPassword: boolean = false;
 
   constructor(
     private router: Router,
     private authSrv: AuthentificationService
-  ) {}
+  ) {
+    this.form = new FormGroup({
+      login: new FormControl('', Validators.required),
+      password: new FormControl(
+        '',
+        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{3,}$/)
+      ),
+    });
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
   check() {
     this.authSrv.authentication(this.login, this.password).subscribe({
