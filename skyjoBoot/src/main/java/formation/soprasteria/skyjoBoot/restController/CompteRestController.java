@@ -84,7 +84,7 @@ public class CompteRestController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 		}
 		Compte compte = new Compte();
-		compte.setLogin(compteRequest.getLogin());
+		compte.setUsername(compteRequest.getLogin());
 		compte.setPassword(passwordEncoder.encode(compteRequest.getPassword()));
 		compte.setEmail(compteRequest.getEmail());
 		compte.setRole(Role.ROLE_USER);
