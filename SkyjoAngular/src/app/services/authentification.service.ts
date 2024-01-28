@@ -20,13 +20,9 @@ export class AuthentificationService {
     return this.http.get<Compte>(this.authUrl, { headers: httpHeader });
   }
 
-  // public isAdmin(): boolean {
-  //   if (localStorage.getItem('token')) {
-  //     let role = JSON.parse(localStorage.getItem('compte')!).role;
-  //     if (role == 'ROLE_ADMIN') {
-  //       return true;
-  //     }
-  //   }
-  //   return false;
-  // }
+  public isAdmin(): boolean {
+    if (!localStorage.getItem('token')) return false;
+    let role = JSON.parse(localStorage.getItem('compte')!).role;
+    return role == 'ROLE_ADMIN';
+  }
 }

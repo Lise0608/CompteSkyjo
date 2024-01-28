@@ -4,7 +4,7 @@
       <div class="card shadow p-3 mb-5 bg-body-tertiary rounded-4">
         <div class="card-body">
           <h3 class="text-center mb-4">Skyjo</h3>
-          <form [formGroup]="form">
+          <form [formGroup]="form" (ngSubmit)="check()">
             <div class="mb-3">
               <label for="user" class="form-label">User</label>
               <input
@@ -14,13 +14,14 @@
                 name="user"
                 formControlName="login"
                 placeholder="Username"
+                [(ngModel)]="login"
                 required
               />
               <div
                 *ngIf="form.get('login')?.dirty && form.get('login')?.invalid"
               >
                 <span *ngIf="form.get('login')?.hasError('required')"
-                  >*obligatoire</span
+                  >*username required</span
                 >
               </div>
             </div>
@@ -33,7 +34,17 @@
                 formControlName="password"
                 name="password"
                 placeholder="Enter your Password"
+                [(ngModel)]="password"
               />
+              <div
+                *ngIf="
+                  form.get('password')?.dirty && form.get('password')?.invalid
+                "
+              >
+                <span *ngIf="form.get('password')?.hasError('required')"
+                  >*password required</span
+                >
+              </div>
               <span
                 class="bi"
                 [ngClass]="{
@@ -56,7 +67,6 @@
                   color: white;
                 "
                 [disabled]="form.invalid"
-                routerLink="/home"
               >
                 Login
               </button>

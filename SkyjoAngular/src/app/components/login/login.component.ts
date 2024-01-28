@@ -21,10 +21,7 @@ export class LoginComponent {
   ) {
     this.form = new FormGroup({
       login: new FormControl('', Validators.required),
-      password: new FormControl(
-        '',
-        Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{3,}$/)
-      ),
+      password: new FormControl('', Validators.required),
     });
   }
 
@@ -44,6 +41,7 @@ export class LoginComponent {
       },
       error: (err) => {
         this.erreur = true;
+        console.log('Err : Missing User Account');
       },
     });
   }
